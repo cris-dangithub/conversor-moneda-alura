@@ -1,37 +1,32 @@
 package conversorMonedas;
 
+import java.text.DecimalFormat;
+
 import javax.swing.JOptionPane;
+import com.google.gson.JsonObject;
+import utils.Fetcher;
 
 public class ConvertirMonedas {
+	private String route = "https://api.currencyapi.com/v3/latest?apikey=";
+	private String apikey = "cur_live_bpoTkI6mOMfN8e5cPlEckc06OdymiQ4D1TVHjBBt";
+	private JsonObject resAPI;
 
-	
-	public void ConvertirPesosADolares(double valor) {
-		double monedaDolar = valor / 3739.00;
-		monedaDolar = (double) Math.round(monedaDolar *100d)/100;
-        JOptionPane.showMessageDialog(null, "Tienes $ " +monedaDolar+ " Dolares");
+	public ConvertirMonedas() {
 	}
-	
-	public void ConvertirPesosAEuros(double valor) {
-		double monedaEuro = valor / 4050.48;
-		monedaEuro = (double) Math.round(monedaEuro *100d)/100;
-		JOptionPane.showMessageDialog(null, "Tienes $ " +monedaEuro+ " Euros");
+
+	public ConvertirMonedas(String baseCurrency) {
+		this.route += this.apikey + "&base_currency=" + baseCurrency;
+		Fetcher converterApi = new Fetcher(this.route);
+		this.resAPI = converterApi.GET().getAsJsonObject("data");
+
 	}
-	
-	public void ConvertirPesosALibras(double valor) {
-		double monedaLibra = valor / 4890.52;
-        monedaLibra = (double) Math.round(monedaLibra *100d)/100;
-        JOptionPane.showMessageDialog(null, "Tienes $ " +monedaLibra+ " Libras Esterlinas");
+
+	public void convertidor(double valor, String toCurrency, boolean isInverted, String nameCurrency) {
+		DecimalFormat formato = new DecimalFormat("#.##");
+		double change = this.resAPI.getAsJsonObject(toCurrency).get("value").getAsDouble();
+		String monedaConvertida = formato.format(isInverted ? valor / change : valor * change);
+		String msg = "Tienes $" + monedaConvertida + " " + nameCurrency;
+		JOptionPane.showMessageDialog(null, msg);
 	}
-	
-	public void ConvertirPesosAYen(double valor) {
-		double monedaYen = valor / 29.68;
-        monedaYen = (double) Math.round(monedaYen *100d)/100;
-        JOptionPane.showMessageDialog(null, "Tienes $ " +monedaYen+ " Yuanes");
-	}
-	
-	public void ConvertirPesosAWon(double valor) {
-		double monedaWon = valor / 3.04;
-        monedaWon = (double) Math.round(monedaWon *100d)/100;
-        JOptionPane.showMessageDialog(null, "Tienes $ " +monedaWon+ " Wons");
-	}
+
 }

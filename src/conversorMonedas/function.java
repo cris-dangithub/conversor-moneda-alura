@@ -4,8 +4,7 @@ import javax.swing.JOptionPane;
 
 public class function {
 
-	ConvertirMonedas monedas = new ConvertirMonedas();
-	ConvertirMonedasAPesos pesos = new ConvertirMonedasAPesos();
+	ConvertirMonedas monedas = new ConvertirMonedas("COP");
 	
     public void ConvertirMonedas(double Minput) {
     	String opcion = (JOptionPane.showInputDialog(null, 
@@ -15,36 +14,36 @@ public class function {
     			"Seleccion")).toString();
         switch(opcion) {
         case "De Pesos a Dólar":
-        	monedas.ConvertirPesosADolares(Minput);
+        	monedas.convertidor(Minput, "USD", false, "Dolares");
         	break;
         case "De Pesos a Euro":
-        	monedas.ConvertirPesosAEuros(Minput);
+        	monedas.convertidor(Minput, "EUR", false, "Euros");
         	break;
         case "De Pesos a Libras":
-        	monedas.ConvertirPesosALibras(Minput);
+        	monedas.convertidor(Minput, "GBP", false, "Libras");
         	break;
         case "De Pesos a Yen":
-        	monedas.ConvertirPesosAYen(Minput);
+        	monedas.convertidor(Minput, "JPY", false, "Yens");
         	break;
         case "De Pesos a Won Coreano":
-        	monedas.ConvertirPesosAWon(Minput);
+        	monedas.convertidor(Minput, "KRW", false, "Wons coreanos");
         	break;    	    	                          
         case "De Dólar a Pesos":
-        	pesos.ConvertirDolaresAPesos(Minput);
+        	monedas.convertidor(Minput, "USD", true, "Pesos");
         	break;
         case "De Euro a Pesos":
-        	pesos.ConvertirEurosAPesos(Minput);
+        	monedas.convertidor(Minput, "EUR", true, "Pesos");
         	break;
         case "De Libras a Pesos":
-        	pesos.ConvertirLibrasAPesos(Minput);
+        	monedas.convertidor(Minput, "GBP", true, "Pesos");
         	break;
         case "De Yen a Pesos":
-        	pesos.ConvertirYenAPesos(Minput);
+        	monedas.convertidor(Minput, "JPY", true, "Pesos");
         	break;
         case "De Won Coreano a Pesos":
-            pesos.ConvertirWonAPesos(Minput);
+        	monedas.convertidor(Minput, "KRW", true, "Pesos");
             break;
         }      
-    }
-        
+	}
+
 }
